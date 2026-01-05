@@ -3,22 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Lovable App</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
-
-    <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Lovable App" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
+    
+    <!-- SEO Meta Tags -->
+    <title>Lahori Spice House | Authentic Lahori BBQ & Karahi in Lahore</title>
+    <meta name="description" content="Experience authentic Lahori BBQ, karahis, handis, and biryani at Lahori Spice House. Fresh, spicy, and irresistible. Order on WhatsApp or visit us in Al Kabir Town, Lahore." />
+    <meta name="keywords" content="Lahori BBQ, karahi, handi, biryani, restaurant Lahore, Al Kabir Town, Pakistani food, desi food, tikka boti, mutton karahi, chicken karahi" />
+    <meta name="author" content="Lahori Spice House" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:title" content="Lahori Spice House | Authentic Lahori BBQ & Karahi" />
+    <meta property="og:description" content="Experience authentic Lahori BBQ, karahis, handis, and biryani. Fresh, spicy, and irresistible!" />
+    <meta property="og:locale" content="en_PK" />
+    <meta property="og:site_name" content="Lahori Spice House" />
+    
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:title" content="Lahori Spice House | Authentic Lahori BBQ" />
+    <meta name="twitter:description" content="Experience authentic Lahori BBQ, karahis, and handis. Order on WhatsApp!" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://lahorispicehouse.com" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "Lahori Spice House",
+      "description": "Authentic Lahori BBQ, karahis, handis, and biryani restaurant in Lahore",
+      "image": "/og-image.jpg",
+      "telephone": "+923005551789",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "23, Usman Block, Al Kabir Town Phase II",
+        "addressLocality": "Lahore",
+        "addressRegion": "Punjab",
+        "addressCountry": "PK"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "31.3827",
+        "longitude": "74.2494"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "12:00",
+        "closes": "02:00"
+      },
+      "servesCuisine": ["Pakistani", "Lahori", "BBQ"],
+      "priceRange": "PKR 250 - 5000"
+    }
+    </script>
   </head>
-
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
