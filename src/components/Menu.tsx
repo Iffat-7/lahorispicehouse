@@ -1,13 +1,6 @@
 import { useState, useMemo } from "react";
 import { Search, ChevronDown, ChevronUp } from "lucide-react";
-import { menuData, MenuCategory, MenuItem } from "@/data/menuData";
-
-const badgeStyles: Record<string, { label: string; className: string }> = {
-  bestseller: { label: "🔥 Best Seller", className: "bg-spice-gold/20 text-spice-gold" },
-  chefpick: { label: "👨‍🍳 Chef's Pick", className: "bg-primary/20 text-primary" },
-  spicy: { label: "🌶️ Spicy", className: "bg-red-500/20 text-red-500" },
-  new: { label: "✨ New", className: "bg-green-500/20 text-green-600" },
-};
+import { menuData, MenuCategory } from "@/data/menuData";
 
 const Menu = () => {
   const [activeCategory, setActiveCategory] = useState<string>("all");
@@ -76,17 +69,6 @@ const Menu = () => {
     return filteredCategories.filter((cat) => categoryNames.includes(cat.name));
   }, [quickFilter, filteredCategories, categoryGroups]);
 
-  const renderBadge = (item: MenuItem) => {
-    if (!item.badge) return null;
-    const badge = badgeStyles[item.badge];
-    if (!badge) return null;
-    return (
-      <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide ${badge.className}`}>
-        {badge.label}
-      </span>
-    );
-  };
-
   return (
     <section id="menu" className="section-padding bg-gradient-warm">
       <div className="container-custom">
@@ -101,33 +83,6 @@ const Menu = () => {
           <p className="text-muted-foreground max-w-2xl mx-auto">
             From sizzling karahis to wood-fired pizzas, explore our 100+ authentic dishes
           </p>
-        </div>
-
-        {/* Signature Section - Highlighted Items */}
-        <div className="bg-charcoal text-cream rounded-2xl p-6 mb-10">
-          <h3 className="text-xl font-display font-bold text-center mb-6 flex items-center justify-center gap-2">
-            <span className="text-spice-gold">★</span> Signature Dishes <span className="text-spice-gold">★</span>
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-cream/5 border border-cream/10 rounded-xl p-4 text-center hover:border-spice-gold/30 transition-colors">
-              <span className="text-3xl mb-2 block">🍲</span>
-              <h4 className="font-bold text-lg">Chicken Karahi</h4>
-              <p className="text-cream/70 text-sm mb-2">Customer Favorite</p>
-              <span className="text-spice-gold font-bold">Rs. 1,000 - 2,000</span>
-            </div>
-            <div className="bg-cream/5 border border-cream/10 rounded-xl p-4 text-center hover:border-spice-gold/30 transition-colors">
-              <span className="text-3xl mb-2 block">🔥</span>
-              <h4 className="font-bold text-lg">BBQ Platter</h4>
-              <p className="text-cream/70 text-sm mb-2">Best Seller</p>
-              <span className="text-spice-gold font-bold">Rs. 2,500</span>
-            </div>
-            <div className="bg-cream/5 border border-cream/10 rounded-xl p-4 text-center hover:border-spice-gold/30 transition-colors">
-              <span className="text-3xl mb-2 block">🐔</span>
-              <h4 className="font-bold text-lg">Tandoori Chargha</h4>
-              <p className="text-cream/70 text-sm mb-2">Family Special</p>
-              <span className="text-spice-gold font-bold">Rs. 2,200</span>
-            </div>
-          </div>
         </div>
 
         {/* Search Bar */}
@@ -233,7 +188,11 @@ const Menu = () => {
                           <span className="font-medium text-foreground group-hover:text-primary transition-colors">
                             {item.name}
                           </span>
-                          {renderBadge(item)}
+                          {item.popular && (
+                            <span className="text-[10px] bg-spice-gold/20 text-spice-gold px-2 py-0.5 rounded-full font-semibold uppercase tracking-wide">
+                              🔥 Hot
+                            </span>
+                          )}
                         </div>
                         {item.description && (
                           <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
@@ -284,10 +243,10 @@ const Menu = () => {
         {/* Order CTA */}
         <div className="text-center mt-12">
           <p className="text-muted-foreground mb-4">
-            Ready to order? It takes just seconds!
+            Ready to order? Contact us directly!
           </p>
           <a
-            href="https://wa.me/923005551789?text=Hi%2C%20I%20want%20to%20order%20from%20Lahori%20Spice%20House"
+            href="https://wa.me/923005551789"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-hero-primary inline-flex items-center gap-2"
