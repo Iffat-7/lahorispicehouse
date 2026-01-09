@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { MessageCircle, X, Send, Loader2, MapPin, Phone, Clock } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, Clock, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
@@ -15,6 +15,7 @@ const ChatWidget = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [hasAutoGreeted, setHasAutoGreeted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -32,6 +33,18 @@ const ChatWidget = () => {
       inputRef.current.focus();
     }
   }, [isOpen]);
+
+  // Auto-greet after 3 seconds on page load (only once)
+  useEffect(() => {
+    if (hasAutoGreeted) return;
+    
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+      setHasAutoGreeted(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [hasAutoGreeted]);
 
   const streamChat = useCallback(
     async ({
@@ -124,10 +137,11 @@ const ChatWidget = () => {
     []
   );
 
-  const sendMessage = async () => {
-    if (!input.trim() || isLoading) return;
+  const sendMessage = async (messageText?: string) => {
+    const text = messageText || input.trim();
+    if (!text || isLoading) return;
 
-    const userMsg: Message = { role: "user", content: input.trim() };
+    const userMsg: Message = { role: "user", content: text };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsLoading(true);
@@ -170,11 +184,12 @@ const ChatWidget = () => {
     }
   };
 
+  // Quick action buttons - routing focused
   const quickActions = [
-    { label: "📋 View Menu", message: "Show me the full menu" },
-    { label: "🎁 Deals", message: "What deals do you have?" },
-    { label: "🔥 Popular", message: "What are your most popular dishes?" },
-    { label: "📍 Location", message: "Where are you located?" },
+    { label: "📋 View Menu", message: "Show me the menu highlights" },
+    { label: "🎁 Today's Deals", message: "What are today's best deals?" },
+    { label: "📍 Location & Hours", message: "Where are you located and what are your hours?" },
+    { label: "💬 Talk to Staff", message: "I want to speak to someone" },
   ];
 
   return (
@@ -188,6 +203,10 @@ const ChatWidget = () => {
         aria-label="Open chat"
       >
         <MessageCircle className="w-6 h-6" />
+        {/* Notification dot */}
+        {!hasAutoGreeted && (
+          <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-cream animate-pulse" />
+        )}
       </button>
 
       {/* Chat Window */}
@@ -204,8 +223,8 @@ const ChatWidget = () => {
               🍗
             </div>
             <div>
-              <h3 className="font-display font-bold">Lahori Spice House</h3>
-              <p className="text-xs text-cream/80">Your virtual assistant</p>
+              <h3 className="font-display font-bold">Hungry? 🔥</h3>
+              <p className="text-xs text-cream/80">Get today's specials or order now!</p>
             </div>
           </div>
           <button
@@ -218,26 +237,23 @@ const ChatWidget = () => {
         </div>
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ height: "calc(100% - 180px)" }}>
+        <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ height: "calc(100% - 200px)" }}>
           {messages.length === 0 ? (
             <div className="text-center py-4">
               <p className="text-lg font-display font-bold text-foreground mb-2">
-                Assalamu Alaikum! 👋
+                Want today's specials? 🍲
               </p>
               <p className="text-sm text-muted-foreground mb-4">
-                Welcome to Lahori Spice House! How can I help you today?
+                Or just tell me what you're craving!
               </p>
               
-              {/* Quick Actions */}
-              <div className="grid grid-cols-2 gap-2">
+              {/* Quick Action Buttons - Routing Focus */}
+              <div className="grid grid-cols-2 gap-2 mb-4">
                 {quickActions.map((action) => (
                   <button
                     key={action.label}
-                    onClick={() => {
-                      setInput(action.message);
-                      setTimeout(() => sendMessage(), 100);
-                    }}
-                    className="text-xs bg-muted hover:bg-muted/80 text-muted-foreground rounded-lg px-3 py-2 transition-colors text-left"
+                    onClick={() => sendMessage(action.message)}
+                    className="text-xs bg-muted hover:bg-primary/10 hover:text-primary text-muted-foreground rounded-lg px-3 py-2.5 transition-colors text-left font-medium border border-transparent hover:border-primary/20"
                   >
                     {action.label}
                   </button>
@@ -245,7 +261,7 @@ const ChatWidget = () => {
               </div>
 
               {/* Quick Info */}
-              <div className="mt-4 space-y-2 text-xs text-muted-foreground">
+              <div className="space-y-2 text-xs text-muted-foreground border-t border-border pt-4">
                 <div className="flex items-center gap-2 justify-center">
                   <Clock className="w-3 h-3" />
                   <span>Open 12 PM - 2 AM Daily</span>
@@ -300,7 +316,7 @@ const ChatWidget = () => {
               disabled={isLoading}
             />
             <Button
-              onClick={sendMessage}
+              onClick={() => sendMessage()}
               disabled={!input.trim() || isLoading}
               size="icon"
               className="rounded-full bg-gradient-spice hover:opacity-90 text-cream shrink-0"
@@ -313,17 +329,17 @@ const ChatWidget = () => {
             </Button>
           </div>
           
-          {/* WhatsApp Link */}
+          {/* WhatsApp Order Link - Primary CTA */}
           <a
-            href="https://wa.me/923005551789"
+            href="https://wa.me/923005551789?text=Hi%2C%20I%20want%20to%20order%20from%20Lahori%20Spice%20House"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 mt-2 text-xs text-muted-foreground hover:text-primary transition-colors"
+            className="flex items-center justify-center gap-2 mt-3 bg-[#25D366] hover:bg-[#20bd5a] text-white py-2.5 rounded-full text-sm font-semibold transition-colors"
           >
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
-            Order directly on WhatsApp
+            Order via WhatsApp
           </a>
         </div>
       </div>
