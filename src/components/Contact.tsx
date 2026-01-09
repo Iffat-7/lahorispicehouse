@@ -10,14 +10,14 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Call Us",
-      details: ["+92 300-555-1789"],
-      link: "tel:+923005551789",
+      details: ["+92 300-555-7189"],
+      link: "tel:+923005557189",
     },
     {
       icon: MessageCircle,
       title: "WhatsApp",
-      details: ["+92 300-555-1789"],
-      link: "https://wa.me/923005551789",
+      details: ["+92 300-555-7189"],
+      link: "https://wa.me/923005557189",
     },
     {
       icon: Clock,
@@ -94,7 +94,7 @@ const Contact = () => {
         <div className="text-center mt-12">
           <p className="text-muted-foreground mb-4">Ready to order?</p>
           <a
-            href="https://wa.me/923005551789"
+            href="https://wa.me/923005557189"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-hero-primary"
