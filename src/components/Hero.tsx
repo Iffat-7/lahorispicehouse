@@ -44,7 +44,7 @@ const Hero = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="https://wa.me/923005551789"
+              href="https://wa.me/923005557189"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-hero-primary group"

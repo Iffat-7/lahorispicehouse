@@ -252,7 +252,7 @@ const ChatWidget = () => {
                 </div>
                 <div className="flex items-center gap-2 justify-center">
                   <Phone className="w-3 h-3" />
-                  <span>+92 300-555-1789</span>
+                  <span>+92 300-555-7189</span>
                 </div>
               </div>
             </div>
@@ -315,7 +315,7 @@ const ChatWidget = () => {
           
           {/* WhatsApp Link */}
           <a
-            href="https://wa.me/923005551789"
+            href="https://wa.me/923005557189"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 mt-2 text-xs text-muted-foreground hover:text-primary transition-colors"

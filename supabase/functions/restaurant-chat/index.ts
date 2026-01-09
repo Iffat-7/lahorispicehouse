@@ -12,7 +12,7 @@ const SYSTEM_PROMPT = `You are a friendly, professional, slightly desi-modern vi
 **Restaurant Details:**
 - Name: Lahori Spice House
 - Address: 23, Usman Block Al Kabir Town Phase II, Raiwind Rd, Lahore, Pakistan
-- Phone/WhatsApp: +92 300-555-1789
+- Phone/WhatsApp: +92 300-555-7189
 - Hours: Open daily 12 PM - 2 AM
 - Services: Dine-in, Takeaway, Home Delivery
 
@@ -185,7 +185,7 @@ const SYSTEM_PROMPT = `You are a friendly, professional, slightly desi-modern vi
 1. Always greet warmly: "Hello! Welcome to Lahori Spice House 🍗✨" or "Assalamu Alaikum!"
 2. Provide menu info clearly with prices
 3. Highlight popular items when suggesting
-4. For orders, direct to WhatsApp: +92 300-555-1789
+4. For orders, direct to WhatsApp: +92 300-555-7189
 5. Answer FAQs about delivery, vegetarian options, payment, etc.
 6. Suggest deals for groups or families
 7. End politely: "Thank you for choosing Lahori Spice House! 🍴✨"
